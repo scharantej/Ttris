@@ -1,0 +1,124 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tetris Clone</title>
+<style>
+body {
+font-family: sans-serif;
+background-color: #000;
+color: #fff;
+}
+
+canvas {
+display: block;
+margin: 0 auto;
+border: 1px solid #fff;
+}
+</style>
+</head>
+<body>
+<canvas id="tetris-board" width="400px" height="600px"></canvas>
+
+<script>
+// Define game variables
+const canvas = document.getElementById('tetris-board');
+const ctx = canvas.getContext('2d');
+
+const blockSize = 20;
+const boardWidth = canvas.width / blockSize;
+const boardHeight = canvas.height / blockSize;
+
+// Create the game board
+const board = [];
+for (let i = 0; i < boardHeight; i++) {
+board[i] = [];
+for (let j = 0; j < boardWidth; j++) {
+board[i][j] = 0;
+}
+}
+
+// Define the tetrominoes
+const tetrominoes = [
+[
+[0, 0, 0, 0],
+[0, 1, 1, 1],
+[0, 1, 1, 1],
+[0, 0, 0, 0]
+],
+[
+[0, 1, 1],
+[0, 1, 1],
+[0, 0, 1]
+],
+[
+[0, 1, 1],
+[0, 1, 1],
+[0, 1, 0]
+],
+[
+[0, 1, 1, 0],
+[0, 1, 1, 0],
+[0, 1, 1, 0],
+[0, 0, 0, 0]
+],
+[
+[0, 1, 1],
+[0, 1, 0],
+[0, 1, 0]
+],
+[
+[0, 1, 0],
+[0, 1, 1],
+[0, 1, 0]
+],
+[
+[0, 1, 0],
+[0, 1, 1],
+[0, 1, 0]
+]
+];
+
+// Define the current tetromino
+let currentTetromino = tetrominoes[0];
+let currentTetrominoX = 0;
+let currentTetrominoY = 0;
+
+// Define the game loop
+function gameLoop() {
+// Clear the canvas
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+// Draw the board
+for (let i = 0; i < boardHeight; i++) {
+for (let j = 0; j < boardWidth; j++) {
+if (board[i][j] === 1) {
+ctx.fillStyle = '#fff';
+ctx.fillRect(j * blockSize, i * blockSize, blockSize, blockSize);
+}
+}
+}
+
+// Draw the current tetromino
+for (let i = 0; i < currentTetromino.length; i++) {
+for (let j = 0; j < currentTetromino[i].length; j++) {
+if (currentTetromino[i][j] === 1) {
+ctx.fillStyle = '#fff';
+ctx.fillRect((currentTetrominoX + j) * blockSize, (currentTetrominoY + i) * blockSize, blockSize, blockSize);
+}
+}
+}
+
+// Request animation frame
+requestAnimationFrame(gameLoop);
+}
+
+// Start the game loop
+gameLoop();
+</script>
+</body>
+</html>
+
